@@ -17,7 +17,7 @@ body {
 }
 
 header {
-  background-image: url(../images/band.jpg);
+  background-image: url(../images/home.jpg);
   background-repeat: no-repeat;
   background-position: bottom right;
   border-width: .1rem;
@@ -67,4 +67,39 @@ article img {
   border-style: solid;
   outline-width: .1em;
   outline-style: solid;
+}
+
+#about header {
+  background-image: url(../images/about.jpg);
+}
+
+#contact header {
+  background-image: url(../images/contact.jpg);
+}
+
+#live header {
+  background-image: url(../images/live.jpg);
+}
+
+#photos header {
+  background-image: url(../images/photos.jpg);
+}
+
+#slideshow {
+  width: 700px;
+  height: 700px;
+  position: relative;
+  overflow: hidden;
+}
+#preview {
+  position: absolute;
+  border-width: 0;
+  outline-width: 0;
+}
+
+#frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
 }
