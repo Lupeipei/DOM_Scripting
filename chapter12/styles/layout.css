@@ -9,7 +9,7 @@ section, header, article, nav {
 
 body {
   margin: 1em 10%;
-  background-image: url(../images/concert.jpg);
+  background-image: url(../images/background.jpg);
   background-attachment: fixed;
   background-position: top left;
   background-repeat: repeat-x;
@@ -69,20 +69,24 @@ article img {
   outline-style: solid;
 }
 
-#about header {
-  background-image: url(../images/about.jpg);
+#home header .band {
+  content: url(../images/home.jpg);
 }
 
-#contact header {
-  background-image: url(../images/contact.jpg);
+#about header .band {
+  content: url(../images/band.jpg);
 }
 
-#live header {
-  background-image: url(../images/live.jpg);
+#contact header .band {
+  content: url(../images/girl.jpg);
 }
 
-#photos header {
-  background-image: url(../images/photos.jpg);
+#live header .band {
+  content: url(../images/concert.jpg);
+}
+
+#photos header .band {
+  content: url(../images/concert-1.jpg);
 }
 
 #slideshow {
