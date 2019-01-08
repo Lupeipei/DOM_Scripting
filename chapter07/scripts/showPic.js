@@ -27,7 +27,7 @@ function prepareGallery() {
   }
 }
 
-function inserAfter(newElement, targetElement) {
+function insertAfter(newElement, targetElement) {
   var parent = targetElement.parentNode;
   if (parent.lastChild == targetElement) {
     parent.appendChild(newElement);
@@ -56,8 +56,8 @@ function preparePlaceHolder() {
   var text = document.createTextNode('please choose an image');
   description.appendChild(text);
 
-  inserAfter(placeholder, gallery);
-  inserAfter(description, placeholder);
+  insertAfter(placeholder, gallery);
+  insertAfter(description, placeholder);
 }
 
 function addLoadEvent(func) {
