@@ -111,3 +111,21 @@ article img {
 #imagegallery li {
   display: inline;
 }
+
+td {
+  padding: .5em 3em;
+}
+
+dl {
+  overflow: hidden;
+}
+
+dt {
+  margin: 1em;
+  float: left;
+}
+
+dd {
+  margin: 1em;
+  float: left;
+}

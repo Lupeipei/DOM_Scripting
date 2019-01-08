@@ -230,8 +230,75 @@ function preparePlaceHolder() {
   insertAfter(description, placeholder);
 }
 
+function displayAbbr() {
+  if (!document.getElementsByTagName) return false;
+  var abbrs = document.getElementsByTagName('abbr');
+  if (abbrs.length == 0) return false;
+  var defs = new Array();
+  for (var i=0; i< abbrs.length; i ++) {
+    var current_abbr = abbrs[i];
+    if (current_abbr.childNodes.length < 1) continue;
+    var key = current_abbr.getAttribute('title');
+    defs[key] = current_abbr.lastChild.nodeValue;
+  }
+
+  var dlist = document.createElement('dl');
+  for (key in defs) {
+    var dt = document.createElement('dt');
+    var dtitle = document.createTextNode(defs[key]);
+    var dd = document.createElement('dd');
+    var dtitle_text = document.createTextNode(key);
+    dt.appendChild(dtitle);
+    dd.appendChild(dtitle_text);
+    dlist.appendChild(dt);
+    dlist.appendChild(dd);
+  }
+  var header = document.createElement('h1');
+  var title = document.createTextNode('Abbreviations');
+  header.appendChild(title);
+  var articles = document.getElementsByTagName('article');
+  if (articles.length == 0) return false;
+  var container = articles[0];
+  container.appendChild(header);
+  container.appendChild(dlist);
+}
+
+function stripeTables() {
+  if (!document.getElementsByTagName) return false;
+  var tables = document.getElementsByTagName('table');
+  var odd, rows;
+  for (var i=0; i < tables.length; i++) {
+    odd = false;
+    rows = tables[i].getElementsByTagName('tr');
+    for (var j=0; j < rows.length; j++) {
+      if(odd == true) {
+        addClass(rows[j], 'odd');
+        odd = false;
+      } else {
+        odd = true;
+      }
+    }
+  }
+}
+
+function hightlightRows() {
+  if (!document.getElementsByTagName) return false;
+  var rows = document.getElementsByTagName('tr');
+  for (var i=0; i < rows.length; i++) {
+    rows[i].onmouseover = function() {
+      this.style.fontWeight = "bold";
+    }
+    rows[i].onmouseout = function() {
+      this.style.fontWeight = "normal";
+    }
+  }
+}
+
 addLoadEvent(hightlightPage);
 addLoadEvent(prepareSlideshow);
 addLoadEvent(prepareIntervalnav);
 addLoadEvent(preparePlaceHolder);
 addLoadEvent(prepareGallery);
+addLoadEvent(displayAbbr);
+addLoadEvent(stripeTables);
+addLoadEvent(hightlightRows);
