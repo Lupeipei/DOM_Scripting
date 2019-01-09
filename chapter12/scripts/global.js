@@ -294,6 +294,20 @@ function hightlightRows() {
   }
 }
 
+function focusLabels() {
+  if (!document.getElementsByTagName) return false;
+  var labels = document.getElementsByTagName('label');
+  for (var i=0; i < labels.length; i++) {
+    if (!lables[i].getAttribute('for')) continue;
+    labels[i].hover = function() {
+      var id = this.getAttribute('for');
+      if (!document.getElementById(id)) return false;
+      var element = document.getElementById(id);
+      element.focus();
+    }
+  }
+}
+
 addLoadEvent(hightlightPage);
 addLoadEvent(prepareSlideshow);
 addLoadEvent(prepareIntervalnav);
@@ -302,3 +316,4 @@ addLoadEvent(prepareGallery);
 addLoadEvent(displayAbbr);
 addLoadEvent(stripeTables);
 addLoadEvent(hightlightRows);
+addLoadEvent(focusLabels);

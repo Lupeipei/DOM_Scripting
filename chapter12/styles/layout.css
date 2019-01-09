@@ -129,3 +129,11 @@ dd {
   margin: 1em;
   float: left;
 }
+
+label {
+  display: block;
+}
+
+fieldset {
+  border: 0;
+}

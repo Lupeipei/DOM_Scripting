@@ -21,6 +21,23 @@
     </header>
     <article>
       <h1>Contact the band</h1>
+      <form action="submit.html" method="post">
+        <fieldset>
+          <p>
+            <label for="name">Name: </label>
+            <input type="text" id="name" name="name" placeholder="Your name" required="required" />
+          </p>
+          <p>
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" placeholder="Your email address" required="required" />
+          </p>
+          <p>
+            <label for="message">Message: </label>
+            <textarea name="message" id="message" cols="30" rows="10" placeholder="Your message:" required="required"></textarea>
+          </p>
+          <input type="submit" value="Send" />
+        </fieldset>
+      </form>
     </article>
     <script src="scripts/global.js"></script>
   </body>
