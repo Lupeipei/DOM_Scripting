@@ -298,13 +298,42 @@ function focusLabels() {
   if (!document.getElementsByTagName) return false;
   var labels = document.getElementsByTagName('label');
   for (var i=0; i < labels.length; i++) {
-    if (!lables[i].getAttribute('for')) continue;
+    if (!labels[i].getAttribute('for')) continue;
     labels[i].hover = function() {
       var id = this.getAttribute('for');
       if (!document.getElementById(id)) return false;
       var element = document.getElementById(id);
       element.focus();
     }
+  }
+}
+
+function resetFields(whichform) {
+  for (var i=0; i<whichform.elements.length; i++) {
+    var element = whichform.elements[i];
+    var check = element.placeholder || element.getAttribute('placeholder');
+    if (!check) continue;
+    element.onfocus = function() {
+      var text = this.placeholder || this.getAttribute('placeholder');
+      if (this.value == text) {
+        this.className = '';
+        this.value = "";
+      }
+    }
+    element.onblur = function() {
+      if (this.value == ""){
+        this.className = 'placeholder';
+        this.value = this.placeholder || this.getAttribute('placeholder');
+      }
+    }
+    element.onblur();
+  }
+}
+
+function prepareForms() {
+  var forms = document.forms;
+  for(var i=0; i< forms.length; i++) {
+    resetFields(forms[i]);
   }
 }
 
@@ -317,3 +346,4 @@ addLoadEvent(displayAbbr);
 addLoadEvent(stripeTables);
 addLoadEvent(hightlightRows);
 addLoadEvent(focusLabels);
+addLoadEvent(prepareForms);
