@@ -342,7 +342,6 @@ function isEmail(field) {
 
 function validateForm(whichform) {
   var elements = whichform.elements;
-  alert(elements.length);
   for (var i=0; i< elements.length; i++) {
     var elem = elements[i];
     if (elem.getAttribute('required') == "required") {
@@ -361,15 +360,76 @@ function validateForm(whichform) {
   return true;
 }
 
+function getHTTPObject() {
+  if (typeof XMLHttpRequest == "undefined") {
+    XMLHttpRequest = function() {
+      try { return new ActiveObject("Msxml2.XMLHTTP.6.0"); }
+      catch (e) {}
+      try { return new ActiveObject("Msxml2.XMLHTTP.3.0"); }
+      catch (e) {}
+      try { return new ActiveObject("Msxml2.XMLHTTP"); }
+      catch (e) {}
+      return false;
+    }
+  }
+  return new XMLHttpRequest();
+}
+
+function displayAjaxLoading(element) {
+  while (element.hasChildNodes()) {
+    element.removeChild(element.lastChild);
+  }
+  var loading = document.createElement('img');
+  loading.setAttribute('src', 'images/loading.jpg');
+  loading.setAttribute('alt', '');
+  element.appendChild(loading);
+}
+
+function submitFormWithAjax(whichform, thetarget) {
+  var request = getHTTPObject();
+  if (!request) return false;
+  displayAjaxLoading(thetarget);
+  var dataParts = [];
+  var element;
+  for (var i=0; i< whichform.elements.length; i++) {
+    element = whichform.elements[i];
+    dataParts[i] = element.name + '=' + encodeURIComponent(element.getAttribute('value'));
+  }
+  var data = dataParts.join('&');
+  request.open('POST', whichform.getAttribute('action'), true);
+  request.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+  request.onreadstatechange = function() {
+    if (request.readState == 4) {
+      if (request.status == 200 || request.status == 0 ) {
+        var matches = request.responseText.match(/<article>([\s\S]+)<\/article>/);
+        if (matches.length > 0) {
+          theTarget.innerHTML = matches[1];
+        } else {
+          theTarget.innerHTML = '<p>Oops, there was an error. Sorry.</p>'
+        }
+      } else {
+        theTarget.innerHTML = '<p>' + request.statusText + '</p>';
+      }
+    }
+  };
+  request.send(data);
+  return true;
+}
+
 function prepareForms() {
   var forms = document.forms;
   for(var i=0; i< forms.length; i++) {
     resetFields(forms[i]);
     forms[i].onsubmit = function() {
-      validateForm(this);
+      if (!validateForm(this)) return false;
+      var article = document.getElementsByTagName('article')[0];
+      alert(article);
+      if (submitFormWithAjax(this, article)) return false;
+      return true;
     }
   }
 }
+
 
 addLoadEvent(hightlightPage);
 addLoadEvent(prepareSlideshow);
