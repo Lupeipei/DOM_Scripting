@@ -330,10 +330,44 @@ function resetFields(whichform) {
   }
 }
 
+function isFilled(field) {
+  if (field.value.replace(' ', '').length == 0) return false;
+  var placeholder = field.placeholder || field.getAttribute('placeholder');
+  return (field.value != placeholder);
+}
+
+function isEmail(field) {
+  return (field.value.indexOf('@') != -1 && field.value.indexOf('.') != -1)
+}
+
+function validateForm(whichform) {
+  var elements = whichform.elements;
+  alert(elements.length);
+  for (var i=0; i< elements.length; i++) {
+    var elem = elements[i];
+    if (elem.getAttribute('required') == "required") {
+      if(!isFilled(elem)) {
+        alert("Please fill in the " + elem.name + "field.");
+        return false;
+      }
+    }
+    if (elem.type == "email") {
+      if(!isEmail(elem)) {
+        alert("The " + elem.name + "field must be a valid email address.");
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 function prepareForms() {
   var forms = document.forms;
   for(var i=0; i< forms.length; i++) {
     resetFields(forms[i]);
+    forms[i].onsubmit = function() {
+      validateForm(this);
+    }
   }
 }
 
